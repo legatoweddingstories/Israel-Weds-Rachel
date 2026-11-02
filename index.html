@@ -105,7 +105,15 @@ button,a{font:inherit}.wrap{width:min(920px,92%);margin:auto}.ornament{border:1p
 <script>
 const envelope=document.getElementById('envelopeArt');
 const screen=document.getElementById('envelopeScreen');
-function openInvite(){envelope.classList.add('open');setTimeout(()=>screen.classList.add('opened'),650)}
+const audio=document.getElementById('weddingMusic');
+function openInvite(){
+    envelope.classList.add('open');
+    setTimeout(()=>screen.classList.add('opened'),650);
+
+    audio.play().catch(error => {
+        console.log("Music playback was blocked by the browser.");
+    });
+}
 document.getElementById('openButton').addEventListener('click',openInvite);
 envelope.addEventListener('click',openInvite);
 envelope.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openInvite()}});
@@ -117,8 +125,6 @@ function updateCountdown(){
  document.getElementById('days').textContent=d;document.getElementById('hours').textContent=h;document.getElementById('minutes').textContent=m;document.getElementById('seconds').textContent=s;
 }
 updateCountdown();setInterval(updateCountdown,1000);
-const audio=document.getElementById('weddingMusic'),musicButton=document.getElementById('musicButton');
-musicButton.addEventListener('click',async()=>{if(audio.paused){try{await audio.play();musicButton.textContent='Ⅱ Pause music'}catch(e){musicButton.textContent='Add music file first'}}else{audio.pause();musicButton.textContent='♫ Play music'}});
 document.getElementById('rsvpButton').addEventListener('click',e=>{if(e.currentTarget.getAttribute('href')==='PASTE_GOOGLE_FORM_URL_HERE'){e.preventDefault();alert('The RSVP form will be connected in the next setup step.')}});
 </script>
 </body>
